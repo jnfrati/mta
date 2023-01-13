@@ -15,4 +15,19 @@ export class UsersService {
       },
     });
   }
+
+  async create(
+    email: PrismaUser['email'],
+    password: PrismaUser['password'],
+  ): Promise<User> {
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        password,
+      },
+    });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...result } = user;
+    return result;
+  }
 }
