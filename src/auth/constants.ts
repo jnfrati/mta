@@ -1,5 +1,5 @@
 export const jwtConstants = {
-  secret: '',
+  secret: 'mysecret',
 } as const;
 
 export const hashConstants = {
