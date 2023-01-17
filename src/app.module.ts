@@ -10,7 +10,13 @@ import { TenantsModule } from './tenants/tenants.module';
 import { CategoriesModule } from './categories/categories.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, PrismaModule, TenantsModule, CategoriesModule],
+  imports: [
+    AuthModule,
+    UsersModule,
+    PrismaModule,
+    TenantsModule,
+    CategoriesModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,

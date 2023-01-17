@@ -26,7 +26,7 @@ model Post {
   author    Author?  @relation(fields: [authorId], references: [id])
   authorId  Int?
 
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int
 }
 
@@ -40,7 +40,7 @@ model Author {
 model Tenant {
   id      Int    @id @default(autoincrement())
   name    String
-  slur    String @unique()
+  slug    String @unique()
   owner   User   @relation(fields: [ownerId], references: [id])
   ownerId Int
 
@@ -51,7 +51,7 @@ model Category {
   id       Int    @id @default(autoincrement())
   name     String
   slug     String @unique()
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   tenantId Int
 
   posts Post[]
