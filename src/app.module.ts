@@ -6,9 +6,11 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ZodValidationPipe } from 'nestjs-zod';
+import { TenantsModule } from './tenants/tenants.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, PrismaModule],
+  imports: [AuthModule, UsersModule, PrismaModule, TenantsModule, CategoriesModule],
   controllers: [AppController],
   providers: [
     AppService,
