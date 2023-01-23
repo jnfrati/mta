@@ -12,6 +12,8 @@ export class TenantsService {
       lower: true,
     });
 
+    console.log(ownerId);
+
     const tenant = await this.prismaService.tenant.create({
       data: {
         name,
@@ -40,7 +42,11 @@ export class TenantsService {
 
     const tenants = await this.prismaService.tenant.findMany();
 
-    return tenants;
+    return tenants.map((tenant) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { ownerId, ...rest } = tenant;
+      return rest;
+    });
   }
 
   async getTenant(id: number) {
