@@ -12,8 +12,6 @@ export class TenantsService {
       lower: true,
     });
 
-    console.log(ownerId);
-
     const tenant = await this.prismaService.tenant.create({
       data: {
         name,

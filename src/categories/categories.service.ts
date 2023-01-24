@@ -38,11 +38,12 @@ export class CategoriesService {
   }
 
   async getCategory(id: number) {
-    const category = await this.prismaService.category.findUnique({
+    const category = await this.prismaService.category.findUniqueOrThrow({
       where: {
         id,
       },
     });
+
     return category;
   }
 

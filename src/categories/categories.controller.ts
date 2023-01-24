@@ -28,7 +28,6 @@ export class CategoriesController {
 
   @Get()
   async getCategories(@Param('tenantId', new ParseIntPipe()) tenantId: number) {
-    console.log(typeof tenantId);
     return this.categoriesService.getCategories(tenantId);
   }
 
@@ -39,7 +38,10 @@ export class CategoriesController {
 
   @Patch('/:id')
   @UseGuards(JwtAuthGuard)
-  async updateCategory(@Param('id') id: number, @Body() category: CategoryDto) {
+  async updateCategory(
+    @Param('id', new ParseIntPipe()) id: number,
+    @Body() category: any,
+  ) {
     return this.categoriesService.updateCategory(id, category);
   }
 

@@ -23,11 +23,13 @@ model Post {
   title     String
   content   String?
   published Boolean? @default(false)
-  author    Author?  @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  authors   Author[]
 
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int
+
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenantId Int
 }
 
 model Author {
@@ -45,6 +47,7 @@ model Tenant {
   ownerId Int
 
   categories Category[]
+  Post       Post[]
 }
 
 model Category {
