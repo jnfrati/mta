@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -25,7 +26,10 @@ export class TenantsController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  async updateTenant(@Body() body: TenantDto, @Param('id') id: number) {
+  async updateTenant(
+    @Body() body: TenantDto,
+    @Param('id', new ParseIntPipe()) id: number,
+  ) {
     return this.tenantsService.updateTenant(id, body.name, body.slug);
   }
 
@@ -41,7 +45,8 @@ export class TenantsController {
   }
 
   @Get(':id')
-  async getTenant(@Param('id') id: number) {
+  async getTenant(@Param('id', new ParseIntPipe()) id: number) {
+    console.log(typeof id);
     return this.tenantsService.getTenant(id);
   }
 }

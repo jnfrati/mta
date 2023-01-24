@@ -14,6 +14,11 @@ const errorsMap = {
 export const prismaErrorFormatter = (
   error: Prisma.PrismaClientKnownRequestError,
 ) => {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError)) {
+    console.log(error);
+    return new InternalServerErrorException();
+  }
+
   const { code, meta } = error;
 
   if (code === 'P2002') {
