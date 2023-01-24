@@ -16,7 +16,7 @@ export const prismaErrorFormatter = (
 ) => {
   if (!(error instanceof Prisma.PrismaClientKnownRequestError)) {
     console.log(error);
-    return new InternalServerErrorException();
+    return error;
   }
 
   const { code, meta } = error;
