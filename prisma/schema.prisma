@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -30,6 +30,7 @@ model Post {
 
   tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   tenantId Int
+  files    File[]
 }
 
 model Author {
@@ -37,6 +38,26 @@ model Author {
   name  String
   email String @unique
   posts Post[]
+}
+
+enum FileType {
+  AUDIO
+  PDF
+}
+
+enum FileProvider {
+  S3
+  GOOGLE_DRIVE
+}
+
+model File {
+  id       Int          @id @default(autoincrement())
+  name     String
+  url      String
+  type     FileType
+  provider FileProvider
+  post     Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId   Int
 }
 
 model Tenant {
