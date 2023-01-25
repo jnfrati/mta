@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import { CONFIG } from "../config";
+import type { Tenant } from "../types/tenants";
+
+const tenants: Tenant[] = await fetch(CONFIG.api + "/tenants").then((res) =>
+  res.json()
+);
+---
+
+<div>Hello worlds</div>
+<div>
+  {tenants.map((tenant) => <div>{tenant.name}</div>)}
+</div>
