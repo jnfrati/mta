@@ -36,9 +36,18 @@ export class PostsService {
             },
           })),
         },
+        files: {
+          create: data.files.map((file) => ({
+            name: file.name,
+            url: file.url,
+            type: file.type,
+            provider: file.provider,
+          })),
+        },
       },
       include: {
         authors: true,
+        files: true,
       },
     });
 
@@ -79,6 +88,10 @@ export class PostsService {
       where: {
         id,
       },
+      include: {
+        authors: true,
+        files: true,
+      },
     });
     return post;
   }
@@ -90,10 +103,12 @@ export class PostsService {
       },
       include: {
         authors: true,
+        files: true,
       },
     });
 
     const oldAuthors = oldPost.authors.map((author) => author.email);
+    const oldFiles = oldPost.files.map((file) => file.id);
 
     const removedAuthors = oldAuthors.filter(
       (author) => !data.authors.map((author) => author.email).includes(author),
@@ -123,6 +138,15 @@ export class PostsService {
             },
           })),
           disconnect: removedAuthors.map((email) => ({ email })),
+        },
+        files: {
+          create: data.files.map((file) => ({
+            name: file.name,
+            url: file.url,
+            type: file.type,
+            provider: file.provider,
+          })),
+          delete: oldFiles.map((id) => ({ id })),
         },
       },
       include: {
