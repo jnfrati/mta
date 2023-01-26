@@ -1,0 +1,19 @@
+---
+import { CONFIG } from "../../config";
+
+// get tenant id from param
+const { tenantId } = Astro.params;
+
+if (!tenantId) {
+  Astro.redirect("/");
+  return;
+}
+
+const tenant = await fetch(CONFIG.api + "/tenants/" + tenantId).then((res) =>
+  res.json()
+);
+---
+
+<div>
+  {JSON.stringify(tenant, null, 2)}
+</div>
