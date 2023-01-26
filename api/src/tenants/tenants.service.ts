@@ -47,10 +47,24 @@ export class TenantsService {
     });
   }
 
-  async getTenant(id: number) {
+  async getTenant(slug: string) {
     const tenant = await this.prismaService.tenant.findUnique({
       where: {
-        id,
+        slug,
+      },
+      include: {
+        categories: {
+          take: 3,
+        },
+        posts: {
+          take: 3,
+        },
+        _count: {
+          select: {
+            categories: true,
+            posts: true,
+          },
+        },
       },
     });
     return tenant;

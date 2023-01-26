@@ -75,7 +75,7 @@ model Tenant {
   ownerId Int
 
   categories Category[]
-  Post       Post[]
+  posts      Post[]
 }
 
 model Category {

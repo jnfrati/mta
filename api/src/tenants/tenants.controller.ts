@@ -44,8 +44,8 @@ export class TenantsController {
     return this.tenantsService.getTenants(user.id);
   }
 
-  @Get(':id')
-  async getTenant(@Param('id', new ParseIntPipe()) id: number) {
+  @Get(':slug')
+  async getTenantBySlug(@Param('slug') id: string) {
     return this.tenantsService.getTenant(id);
   }
 }
