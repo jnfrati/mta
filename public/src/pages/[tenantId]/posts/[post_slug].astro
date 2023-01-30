@@ -1,0 +1,14 @@
+---
+import { CONFIG } from "../../../config";
+
+const { tenantId, post_slug } = Astro.params;
+
+const endpoint = CONFIG.api + "/tenants/" + tenantId + "/posts/" + post_slug;
+
+const post = await fetch(endpoint).then((res) => res.json());
+---
+
+<div>
+  <h1>{post.title}</h1>
+  <p>{post.content}</p>
+</div>

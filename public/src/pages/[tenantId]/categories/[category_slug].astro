@@ -1,0 +1,20 @@
+---
+import { CONFIG } from "../../../config";
+
+const { tenantId, category_slug } = Astro.params;
+
+const endpoint =
+  CONFIG.api + "/tenants/" + tenantId + "/categories/" + category_slug;
+
+let category = null;
+try {
+  category = await fetch(endpoint).then((res) => res.json());
+} catch (error) {
+  return Astro.redirect("/404");
+}
+---
+
+<div>
+  <h1>{category.name}</h1>
+  <p>{category?._count?.posts}</p>
+</div>

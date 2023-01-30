@@ -5,15 +5,44 @@ import { CONFIG } from "../../config";
 const { tenantId } = Astro.params;
 
 if (!tenantId) {
-  Astro.redirect("/");
-  return;
+  return Astro.redirect("/");
 }
 
-const tenant = await fetch(CONFIG.api + "/tenants/" + tenantId).then((res) =>
-  res.json()
-);
+const res = await fetch(CONFIG.api + "/tenants/" + tenantId);
+
+let tenant;
+
+try {
+  tenant = await res.json();
+} catch (error) {
+  console.log(error);
+
+  return Astro.redirect("/");
+}
 ---
 
 <div>
-  {JSON.stringify(tenant, null, 2)}
+  {
+    tenant && (
+      <div>
+        <h1>{tenant.name}</h1>
+        <p>{tenant._count.categories}</p>
+        <p>{tenant._count.posts}</p>
+        {tenant.categories.map((category: any) => (
+          <div>
+            <h2>{category.name}</h2>
+            <a href={Astro.url + "/categories/" + category.slug}>
+              Go to category
+            </a>
+          </div>
+        ))}
+        {tenant.posts.map((post: any) => (
+          <div>
+            <h2>{post.title}</h2>
+            <a href={"posts/" + post.slug}>Go to post</a>
+          </div>
+        ))}
+      </div>
+    )
+  }
 </div>
